@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(21, 21, 21);
+}
+
+.nav{
+    margin: 10px;
+}
+.nav a{
+    text-decoration: none;
+    color: white;
+}
+
+input{
+    background: #292929;
+    margin: 10px;
+    padding: 10px;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    width: 200px;
+}
+.submit{
+    background-color: blue;
+    width: 100px;
+}

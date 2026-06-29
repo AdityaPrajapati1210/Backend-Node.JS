@@ -1,0 +1,104 @@
+/* Body styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+/* Navbar */
+.nav {
+    background: #1f2937;
+    padding: 15px 25px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav a:hover {
+    color: #38bdf8;
+}
+
+/* Container */
+.container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    padding: 10px;
+}
+
+/* User card */
+.user {
+    background: white;
+    width: 300px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.user:hover {
+    transform: translateY(-5px);
+}
+
+/* Image */
+.user img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #38bdf8;
+}
+
+/* Name */
+.user h3 {
+    margin: 10px 0 5px;
+    font-size: 22px;
+    color: #111827;
+}
+
+/* Email */
+.user p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Buttons */
+.btns {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns a {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* Edit button */
+.btns a:first-child {
+    background: #3b82f6;
+    color: white;
+}
+
+.btns a:first-child:hover {
+    background: #2563eb;
+}
+
+/* Delete button */
+.btns a:last-child {
+    background: #ef4444;
+    color: white;
+}
+
+.btns a:last-child:hover {
+    background: #dc2626;
+}
