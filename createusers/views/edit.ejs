@@ -31,18 +31,18 @@
     <div class="container">
     <form action="/update/<%=user._id%>" method="post">
         <div>
-            <input type="text" class="name" placeholder="name" value="<%=user.name%>" >
-            <input type="text" class="name" placeholder="name" name="name">
+            <input type="text" class="name" placeholder="name" name="name" value="<%=user.name%>" >
+            <!-- <input type="text" class="name" placeholder="New name" name="name"> -->
 
         </div>
         <div>
-            <input type="text" class="name" placeholder="email" value="<%=user.email%>">
-            <input type="text" class="name" placeholder="email" name="email">
+            <input type="text" class="name" placeholder="email" name="email" value="<%=user.email%>">
+            <!-- <input type="text" class="name" placeholder="New email" name="email"> -->
 
         </div>
         <div>
-            <input type="text" class="name" placeholder="image url" value="<%=user.image%>">
-            <input type="text" class="name" placeholder="image url" name="image">
+            <input type="text" class="name" placeholder="image url" name="image" value="<%=user.image%>">
+            <!-- <input type="text" class="name" placeholder="New image url" name="image"> -->
 
         </div>
         <input type="submit" value="Update" class="submit">

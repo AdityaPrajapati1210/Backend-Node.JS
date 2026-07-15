@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Taks Reminder</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
-    <h1>baby `2+2`</h1>
+    <div class="container">
+        <div class="form">
+            <form action="/create" method="post">
+                <input type="text" placeholder="Write your title..." class="title" name="title">
+                <textarea name="details" placeholder="Enter description..."></textarea>
+                <input type="submit" value="Create" class="submit">
+            </form>
+        </div>
+        <div class="tasks">
+            <% if(files.length > 0){ %>
+                <% files.forEach(function(val){ %>
+                    <div class="task">
+                    <h1><%= val.replace(".txt","") %></h1>
+                    <a href="./files/<%=val%>"<%val%>>Read more...</a>
+                    <form action="/delete/<%=val%>" method="post">
+                        <input type="submit" name="delete" value="delete" class="delete">
+                    </form>
+                    </div>
+             <%   }) %>
+
+            <% } else { %>
+                <div class="notask">no task yet.</div>
+           <% } %>
+
+        </div>
+    </div>
     
 </body>
 </html>

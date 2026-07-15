@@ -2,7 +2,7 @@
     const app = express();;
 
     const path = require("path");
-    const User = require("./userdatabase")
+    const User = require("./models/userdatabase")
 
 
     app.set("view engine" , "ejs");
@@ -29,9 +29,9 @@
             res.redirect("/");
     });
 
-    app.get("/delete/:name", async (req,res)=>{
-        const deleteuser = await User.deleteOne({name:req.params.name});
-        const user = await User.find();
+    app.get("/delete/:id", async (req,res)=>{
+        const deleteuser = await User.deleteOne({_id:req.params.id});
+        // const user = await User.find();
         res.redirect("/read");
     })
 

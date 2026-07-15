@@ -1,0 +1,11 @@
+<%- include("header") %>
+
+<h1>Admin Page</h1>
+
+
+<form action="/addimage" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" placeholder="Choose image" required>
+    <input type="text" name="discription" placeholder="discription" required>
+    <input type="text" name="catagory" placeholder="catagory" required>
+    <input type="submit" value="add">
+</form>

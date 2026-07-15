@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>details page</title>
+    <link rel="stylesheet" href="/stylesheets/show.css">
+</head>
+
+<body>
+    <a href="/">Go to the Home</a>
+    <div class="heading">
+        <h1>
+            <%=filename.replace(".txt","")%>
+        </h1>
+        <a href="/editFilename/<%=filename%>">🖋️edit</a>
+    </div>
+    <div class="para">
+        <form action="/updateContent" method="POST">
+
+            <input type="hidden" name="filename" value="<%= filename %>">
+
+            <textarea name="content" rows="10"  cols="50"><%= content %></textarea>
+
+            <br>
+
+            <button type="submit">
+                Save
+            </button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

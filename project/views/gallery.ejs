@@ -1,0 +1,56 @@
+<%- include("header") %>
+
+<h1>Gallery Page</h1>
+
+<h2>Categories</h2>
+
+<a href="/gallery">all</a>
+
+<% categories.forEach(category => { %>
+
+    <a href="/gallery?category=<%= category %>">
+        <%= category %>
+    </a>
+
+<% }) %>
+
+
+<hr>
+
+<h2><%= selectedCategory || "Select a Category" %></h2>
+
+<% images.forEach(image => { %>
+
+    <img src="<%= image.image_url %>" width="250">
+
+    <p><%= image.description %></p>
+
+<% }) %>]
+
+
+
+<!-- <div class="gallery">
+    <% images.forEach(image => { %>
+
+        <img
+            src="<%= image.image_url %>"
+            class="gallery-img"
+            onclick="openImage('<%= image.image_url %>')"
+        >
+
+    <% }) %>
+</div> -->
+
+
+
+
+<div id="imageModal" class="modal">
+
+    <span class="close" onclick="closeImage()">&times;</span>
+
+    <img id="modalImage">
+
+</div>
+
+
+
