@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="flex gap-1.5">
+        <%for(let post of posts){%>
+                    <div class="bg-amber-200 border-amber-800 border-4 rounded-2xl w-50 max-h-70 min-h-70">
+            <h3><%=post.username%></h3>
+            <p><%=post.caption%></p>
+            <div>
+                <img src="<%=post.img%>" alt="photo">
+            </div>
+            <a href="">see details</a>
+            <a href="">edit</a>
+            <button>Delete</button>
+        </div>
+        <%}%>
+    </div>
+    
+</body>
+</html>
