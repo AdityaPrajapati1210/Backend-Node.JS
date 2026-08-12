@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account</title>
+
+    <link rel="stylesheet" href="/css/tailwind.css">
+</head>
+
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+
+    <form action="/user/<%= data.id %>?_method=DELETE" method="post" class="bg-white p-6 rounded-xl shadow-lg w-80">
+
+        <h1 class="text-xl font-bold text-gray-800 mb-4">
+            Are you sure to delete account?
+        </h1>
+
+        <p class="text-gray-600 font-semibold mb-4">
+            @<%= data.name %>
+        </p>
+
+        <label for="passWord" class="block text-sm font-medium text-gray-700 mb-2">
+            Enter your password
+        </label>
+
+        <input type="password" name="passWord" id="passWord" placeholder="Password"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 outline-none focus:ring-2 focus:ring-red-400">
+
+        <p class="text-red-500 warning hidden">
+            Wrong password!!!!
+        </p>
+
+        <button type="submit"
+            class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg transition">
+            Delete Account
+        </button>
+
+    </form>
+ <script>
+    const actualPassword = "<%= data.password %>";
+    const passWord = document.getElementById("passWord");
+    const form = document.querySelector("form");
+    const warning = document.querySelector(".warning");
+
+    form.addEventListener("submit", (e) => {
+        if (String(passWord.value) != String(actualPassword)) {
+            e.preventDefault();
+            warning.classList.remove("hidden");
+        } else {
+            warning.classList.add("hidden");
+        }
+    });
+</script>
+</body>
+
+</html>

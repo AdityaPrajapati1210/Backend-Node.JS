@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit user</title>
+</head>
+
+<body>
+    <div>
+        <form action="/user/<%= user.id %>?_method=PATCH" method="POST" class="bg-amber-300 p-5 rounded-2xl w-[300px]">
+            <input type="text" name="UpdatedName" value="<%=user.name%>">
+            <button type="submit">Update</button>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
