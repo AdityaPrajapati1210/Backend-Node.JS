@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link, NavLink } from "react-router-dom";
 
 export default function Footer() {
     return (
@@ -20,14 +20,19 @@ export default function Footer() {
                             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
                             <ul className="text-gray-500 font-medium">
                                 <li className="mb-4">
-                                    <Link to="/" className="hover:underline">
+                                    <NavLink to="/" end className={({isActive}) =>
+                                        `hover:underline ${(isActive)? "text-orange-300":"text-gray-700"}`
+                                    }
+                                    >
                                         Home
-                                    </Link>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/about" className="hover:underline">
+                                    <NavLink to="/about" className={({isActive}) =>
+                                        `hover:underline ${(isActive)? "text-orange-300":"text-gray-700"}`
+                                    }>
                                         About
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>
@@ -73,7 +78,7 @@ export default function Footer() {
                     <span className="text-sm text-gray-500 sm:text-center">
                         © 2023
                         <a href="https://hiteshchoudhary.com/" className="hover:underline">
-                            hiteshchoudhary
+                            AdityaPrajapti
                         </a>
                         . All Rights Reserved.
                     </span>

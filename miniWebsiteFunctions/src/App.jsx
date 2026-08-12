@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import './App.css'
+import { Footer, Header, About, Home } from './components';
+import { Outlet } from 'react-router-dom'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1 className="bg-red-400">meow</h1>
-      <p className=''></p>
+      <Header/>,
+      <Outlet/>,
+      <Footer/>
     </>
   )
 }
