@@ -1,21 +1,22 @@
 const express = require("express");
 const app = express();
 
-const usermodel = require("./userdatabase");
+const user = require("./userdatabase");
 
 
 app.get("/create",async (req,res)=>{
-    const Createduser = await usermodel.create({
+    const Createduser = await user.create({
         name:"Aditya",
         email:"aditya@123",
         username :"jaduger"
     })
+    console.log("ccreated");
     res.send(Createduser);
 })
 
 
 app.get("read",async (req ,res)=>{
-    const restuser = await usermodel.find({username : "jaduger"});
+    const restuser = await user.find({username : "jaduger"});
     res.send(restuser);
 })
 
