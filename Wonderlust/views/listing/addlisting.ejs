@@ -1,0 +1,139 @@
+<%- include("../navbar") %>
+<div class="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
+
+    <div class="mx-auto max-w-2xl">
+
+        <!-- Heading -->
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">
+                Add New Listing
+            </h1>
+            <p class="mt-2 text-sm text-gray-500 sm:text-base">
+                Add the details of your beautiful place
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="rounded-2xl bg-white p-5 shadow-lg sm:p-8">
+
+            <form action="/listing" method="post" class="space-y-5">
+
+                <!-- Title -->
+                <div>
+                    <label for="title" class="mb-2 block text-sm font-medium text-gray-700">
+                        Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Enter listing title"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                    >
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="mb-2 block text-sm font-medium text-gray-700">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        id="description"
+                        rows="4"
+                        placeholder="Describe your place..."
+                        required
+                        class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                    ></textarea>
+                </div>
+
+                <!-- Image URL -->
+                <div>
+                    <label for="image_url" class="mb-2 block text-sm font-medium text-gray-700">
+                        Image URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="image_url"
+                        id="image_url"
+                        placeholder="https://example.com/image.jpg"
+                        required
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                    >
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label for="price" class="mb-2 block text-sm font-medium text-gray-700">
+                        Price per night
+                    </label>
+
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                            ₹
+                        </span>
+
+                        <input
+                            type="number"
+                            name="price"
+                            id="price"
+                            placeholder="5000"
+                            min="0"
+                            required
+                            class="w-full rounded-lg border border-gray-300 py-3 pl-9 pr-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        >
+                    </div>
+                </div>
+
+                <!-- Location + Country -->
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+                    <div>
+                        <label for="location" class="mb-2 block text-sm font-medium text-gray-700">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            placeholder="Mau"
+                            required
+                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="country" class="mb-2 block text-sm font-medium text-gray-700">
+                            Country
+                        </label>
+
+                        <input
+                            type="text"
+                            name="country"
+                            id="country"
+                            placeholder="India"
+                            required
+                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="w-full rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white transition hover:bg-indigo-700 active:scale-[0.98]"
+                >
+                    Add to Listing
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>

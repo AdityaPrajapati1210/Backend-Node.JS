@@ -1,0 +1,53 @@
+<%- include("../navbar") %>
+
+<div class="listing grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+
+    <%data.forEach((d) =>{%>
+        <a href="listing/<%=d._id%>">
+            <div class="card w-full overflow-hidden rounded-2xl bg-amber-100 shadow-md">
+
+        <!-- Square Image -->
+        <div class="w-full aspect-square overflow-hidden">
+            <img
+                src="<%=d.image_url%>"
+                alt="Listing image"
+                class="h-full w-full object-cover"
+            >
+        </div>
+
+        <!-- Content -->
+        <div class="p-4">
+
+            <h1 class="text-xl font-bold truncate">
+                <%=d.title%>
+            </h1>
+
+            <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+                <%=d.description%>
+            </p>
+
+            <div class="mt-4 flex items-end justify-between gap-3">
+
+                <div class="min-w-0">
+                    <p class="truncate font-medium">
+                        <%=d.location%>
+                    </p>
+
+                    <p class="truncate text-sm text-gray-500">
+                        <%=d.country%>
+                    </p>
+                </div>
+
+                <p class="shrink-0 font-bold">
+                    ₹<%=d.price%>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    </a>
+    <%});%>
+
+</div>

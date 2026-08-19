@@ -1,0 +1,89 @@
+<%- include("../navbar") %>
+
+<div class="min-h-screen bg-gray-100 p-6">
+
+    <div class="mx-auto max-w-4xl overflow-hidden rounded-2xl bg-white shadow-lg">
+
+        <!-- Image -->
+        <div class="h-[400px] w-full overflow-hidden">
+            <img
+                src="<%= data.image_url %>"
+                alt="<%= data.title %>"
+                class="h-full w-full object-cover"
+            >
+        </div>
+
+        <!-- Details -->
+        <div class="p-6">
+
+            <h1 class="text-3xl font-bold text-gray-800">
+                <%= data.title %>
+            </h1>
+
+            <p class="mt-4 text-gray-600">
+                <%= data.description %>
+            </p>
+
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div class="rounded-lg bg-gray-100 p-4">
+                    <p class="text-sm text-gray-500">
+                        Location
+                    </p>
+
+                    <p class="font-semibold">
+                        <%= data.location %>
+                    </p>
+                </div>
+
+                <div class="rounded-lg bg-gray-100 p-4">
+                    <p class="text-sm text-gray-500">
+                        Country
+                    </p>
+
+                    <p class="font-semibold">
+                        <%= data.country %>
+                    </p>
+                </div>
+
+                <div class="rounded-lg bg-gray-100 p-4">
+                    <p class="text-sm text-gray-500">
+                        Price
+                    </p>
+
+                    <p class="font-semibold">
+                        ₹<%= data.price %> / night
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-6 flex justify-end gap-3">
+
+                <a
+                    href="/listing/<%= data._id %>/edit"
+                    class="rounded-lg bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-blue-600"
+                >
+                    Edit
+                </a>
+
+                <form
+                    action="/listing/<%= data._id %>?_method=DELETE"
+                    method="POST"
+                >
+                    <button
+                        type="submit"
+                        class="rounded-lg bg-red-500 px-5 py-2 font-semibold text-white hover:bg-red-600"
+                    >
+                        Delete
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
