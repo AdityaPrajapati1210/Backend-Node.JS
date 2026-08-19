@@ -10,9 +10,13 @@
   "author": "Aditya prajapati",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.3.3",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
+    "react-redux": "^9.3.0",
+    "redux": "^5.0.1",
+    "redux-toolkit": "^1.1.2",
     "tailwindcss": "^4.3.3"
   }
 }
