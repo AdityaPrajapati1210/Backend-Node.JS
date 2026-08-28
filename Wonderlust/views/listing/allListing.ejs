@@ -1,9 +1,9 @@
-<%- include("../navbar") %>
+<% layout('boilerplate') %>
 
 <div class="listing grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
 
     <%data.forEach((d) =>{%>
-        <a href="listing/<%=d._id%>">
+        <a href="/listing/<%=d._id%>">
             <div class="card w-full overflow-hidden rounded-2xl bg-amber-100 shadow-md">
 
         <!-- Square Image -->

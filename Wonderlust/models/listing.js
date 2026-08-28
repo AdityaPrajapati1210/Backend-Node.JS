@@ -28,7 +28,6 @@ const listingSchema = new mongoose.Schema(
 
         image_url: {
             type: String,
-            required: true,
             trim: true
         },
 

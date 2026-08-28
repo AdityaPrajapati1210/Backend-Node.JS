@@ -1,4 +1,4 @@
-<%- include("../navbar") %>
+<% layout('boilerplate') %>
 <div class="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
 
     <div class="mx-auto max-w-2xl">
@@ -16,7 +16,7 @@
         <!-- Form Card -->
         <div class="rounded-2xl bg-white p-5 shadow-lg sm:p-8">
 
-            <form action="/listing" method="post" class="space-y-5">
+            <form action="/listing" method="post" class="space-y-5 needs-validation" novalidate>
 
                 <!-- Title -->
                 <div>
@@ -30,8 +30,11 @@
                         id="title"
                         placeholder="Enter listing title"
                         required
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                     >
+                    <div class="invalid-feedback">
+                        Please enter a title.
+                    </div>
                 </div>
 
                 <!-- Description -->
@@ -46,8 +49,11 @@
                         rows="4"
                         placeholder="Describe your place..."
                         required
-                        class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                     ></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a description.
+                    </div>
                 </div>
 
                 <!-- Image URL -->
@@ -61,9 +67,11 @@
                         name="image_url"
                         id="image_url"
                         placeholder="https://example.com/image.jpg"
-                        required
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                     >
+                    <div class="invalid-feedback">
+                        Please enter a valid image URL.
+                    </div>
                 </div>
 
                 <!-- Price -->
@@ -84,8 +92,11 @@
                             placeholder="5000"
                             min="0"
                             required
-                            class="w-full rounded-lg border border-gray-300 py-3 pl-9 pr-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                            class="w-full rounded-lg border border-gray-300 py-3 pl-9 pr-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                         >
+                        <div class="invalid-feedback">
+                            Please enter a valid price.
+                        </div>
                     </div>
                 </div>
 
@@ -103,8 +114,11 @@
                             id="location"
                             placeholder="Mau"
                             required
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                         >
+                        <div class="invalid-feedback">
+                            Please enter a location.
+                        </div>
                     </div>
 
                     <div>
@@ -118,8 +132,11 @@
                             id="country"
                             placeholder="India"
                             required
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 form-control"
                         >
+                        <div class="invalid-feedback">
+                            Please enter a country.
+                        </div>
                     </div>
 
                 </div>

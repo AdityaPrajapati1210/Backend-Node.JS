@@ -1,7 +1,9 @@
-<%- include("../navbar") %><form
+<% layout('boilerplate') %>
+<form
     action="/listing/<%= data._id %>?_method=PATCH"
     method="POST"
-    class="mx-auto mt-10 max-w-2xl rounded-2xl bg-white p-8 shadow-lg"
+    class="mx-auto mt-10 max-w-2xl rounded-2xl bg-white p-8 shadow-lg needs-validation"
+    novalidate
 >
     <h1 class="mb-6 text-3xl font-bold text-gray-800">
         Edit Listing
@@ -17,9 +19,12 @@
             type="text"
             name="title"
             value="<%= data.title %>"
-            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
             required
         >
+        <div class="invalid-feedback">
+            Please enter a title.
+        </div>
     </div>
 
     <!-- Description -->
@@ -31,9 +36,12 @@
         <textarea
             name="description"
             rows="4"
-            class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
             required
         ><%= data.description %></textarea>
+        <div class="invalid-feedback">
+            Please enter a description.
+        </div>
     </div>
 
     <!-- Location & Country -->
@@ -48,9 +56,12 @@
                 type="text"
                 name="location"
                 value="<%= data.location %>"
-                class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
                 required
             >
+            <div class="invalid-feedback">
+                Please enter a location.
+            </div>
         </div>
 
         <div>
@@ -62,9 +73,12 @@
                 type="text"
                 name="country"
                 value="<%= data.country %>"
-                class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
                 required
             >
+            <div class="invalid-feedback">
+                Please enter a country.
+            </div>
         </div>
 
     </div>
@@ -84,9 +98,12 @@
                 type="number"
                 name="price"
                 value="<%= data.price %>"
-                class="w-full rounded-lg border border-gray-300 py-3 pl-9 pr-4 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                class="w-full rounded-lg border border-gray-300 py-3 pl-9 pr-4 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
                 required
             >
+            <div class="invalid-feedback">
+                Please enter a valid price.
+            </div>
         </div>
     </div>
 
@@ -100,9 +117,12 @@
             type="text"
             name="image_url"
             value="<%= data.image_url %>"
-            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200 form-control"
             required
         >
+        <div class="invalid-feedback">
+            Please enter a valid image URL.
+        </div>
     </div>
 
     <!-- Buttons -->

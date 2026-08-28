@@ -73,6 +73,34 @@ app.get("/logout", (req, res) => {
     res.send("Logged Out");
 });
 
+class ExpressError extends Error {
+    constructor(status, message) {
+        super();
+        this.message = message;
+        this.status = status;
+    }
+}
+
+app.use("/admin", (req, res, next) => {
+    const { token } = req.query;
+
+    if (token === "admin") {
+        return next();
+    }
+
+    throw new ExpressError(401, "Access cancelled");
+});
+
+app.get("/admin", (req, res) => {
+    res.send("You are now admin!!!");
+});
+
+app.use((err, req, res, next) => {
+    let { status = 500, message = "Some Error" } = err;
+
+    res.status(status).send(message);
+});
+
 
 app.listen(3000, () => {
     console.log("Server Running On Port 3000");

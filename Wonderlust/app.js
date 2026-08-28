@@ -3,19 +3,20 @@ const path = require("path");
 const mongoose = require("mongoose");
 const listing = require("./models/listing.js");
 const method = require("method-override");
+const ejsMate = require("ejs-mate");
 const app = express();
 
 
 
-app.set("view engine" ,"ejs");
+app.engine("ejs", ejsMate);
+app.set("view engine" ,"ejs");  
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname,"public")));
 app.use(method("_method"));
 
 app.get("/",(req,res)=>{
-    // res.status(200).json({ message: "working"});
-    res.render("navbar");
+    res.redirect("/home");
 });
 
 app.get("/home",(req,res)=>{
