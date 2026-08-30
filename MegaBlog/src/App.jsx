@@ -6,8 +6,8 @@ import { login,logout } from './store/authSlice';
 import authService from './Appwrite/Auth'
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer'
-import { Outlet } from 'react-router-dom';
-import Login from './components/Login';
+import { Outlet, Routes, Route } from 'react-router-dom';
+import { Signup, Home,Login } from './components';
 
 function App() {
   const [loading ,setLoading] = useState(true);
@@ -33,12 +33,12 @@ function App() {
           <Header/>
           <main>
             <Outlet/>
-            hello
           </main>
           
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
             </Routes>
           <Footer/>
 
