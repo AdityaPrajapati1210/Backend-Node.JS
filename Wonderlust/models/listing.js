@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://127.0.0.1:27017/wonderlust")
-.then(()=>{
-    console.log("MongoDB Connected");
-})
-.catch((err)=>{
-    console.log(err);
-});
+    .then(() => {
+        console.log("MongoDB Connected");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 const listingSchema = new mongoose.Schema(
     {
@@ -52,7 +52,13 @@ const listingSchema = new mongoose.Schema(
             trim: true,
             // minlength: [2, "Country name is too short"],
             // maxlength: [50, "Country name is too long"]
-        }
+        },
+        review: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Review"
+            }
+        ]
     },
 );
 
