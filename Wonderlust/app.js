@@ -8,6 +8,7 @@ const app = express();
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js");
 const Review = require('./models/review.js');
+const {reviewSchema} = require('./schema.js');
 
 
 app.engine("ejs", ejsMate);
@@ -16,6 +17,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(method("_method"));
+
+
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const errMsg = error.details
+            .map((el) => el.message)
+            .join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
 
 app.get("/", (req, res) => {
     res.redirect("/home");
@@ -75,7 +89,7 @@ app.delete("/listing/:id", wrapAsync(async (req, res, next) => {
 }))
 
 // add review
-app.post("/listing/:id/review", wrapAsync(async (req, res, next) => {
+app.post("/listing/:id/review", validateReview, wrapAsync(async (req, res, next) => {
 
     console.log("1. request aayi h");
     console.log("2. ID:", req.params.id);

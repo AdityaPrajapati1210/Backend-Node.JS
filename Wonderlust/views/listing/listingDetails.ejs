@@ -170,7 +170,7 @@
                                 <div class="mb-5">
                                     <span>Rating: </span>
 
-                                    <input type="radio" name="rating" value="1">
+                                    <input type="radio" name="rating" value="1" required>
                                     <label>1 ⭐</label>
 
                                     <input type="radio" name="rating" value="2">
@@ -207,7 +207,7 @@
                                         Cancel
                                     </button>
 
-                                    <button type="submit" 
+                                    <button type="submit"
                                         class="rounded-xl bg-black px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-gray-800">
                                         Submit Review
                                     </button>
@@ -222,10 +222,13 @@
 
                         <!-- Review Cards -->
                         <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 " id="reviewContainer">
-                            <p id="noReviews"
-                                class=" text-gray-500">
+                            <%if(data.review.length === 0){%>
+                            <p id="noReviews" class=" text-gray-500">
                                 No reviews yet... Give your first review.
+
                             </p>
+                            <%}%>
+
 
 
                             <%data.review.forEach((review)=> { %>
@@ -242,6 +245,12 @@
                                     <p class="mt-4 leading-6 text-gray-600">
                                         <%=review.comment%>
                                     </p>
+
+                                    <form action="listings/<%=data._d%>/review/<%=review._id%>?_method=DELETE"
+                                        method="Post">
+                                        <button type="submit"
+                                            class="w-full rounded-xl bg-red-100 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-red-600 hover:shadow-md sm:w-auto">Remove</button>
+                                    </form>
 
                                 </div>
 
@@ -281,3 +290,4 @@
         </div>
 
     </div>
+    
