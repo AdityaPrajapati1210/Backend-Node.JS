@@ -8,7 +8,7 @@ const app = express();
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js");
 const Review = require('./models/review.js');
-const {reviewSchema} = require('./schema.js');
+const { reviewSchema } = require('./schema.js');
 
 
 app.engine("ejs", ejsMate);
@@ -126,17 +126,26 @@ app.post("/listing/:id/review", validateReview, wrapAsync(async (req, res, next)
     console.log("10. listing saved");
 
     res.json({
+        _id: newReview._id,
         rating: newReview.rating,
         comment: newReview.comment
     });
 }));
 
+// remove Review
+app.delete("/listing/:id/review/:reviewId", wrapAsync(async (req, res, next) => {
+    const { id, reviewId } = req.params;
+    await listing.findByIdAndUpdate(id, { $pull: { review: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listing/${id}`);
+}))
 
 
 
 
 
 app.all("/{*splat}", (req, res, next) => {
+    console.log("Khali h");
     next(new ExpressError(404, "Page Not Found"));
 })
 
