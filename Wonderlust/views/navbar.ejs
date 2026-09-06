@@ -5,11 +5,21 @@
     </div>
 
     <div>
-        <ul class="flex gap-6">
-            <li><a href="/home">Home</a></li>
-            <li><a href="/allListing"> ALL Listings</a></li>
-            <li><a href="/listing"> Add Listings</a></li>
-        </ul>
+        <%if(1){%>
+            <ul class="flex gap-6">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/allListing"> ALL Listings</a></li>
+                <li><a href="/listing"> Add Listings</a></li>
+                <li><a href="/logout">logout</a></li>
+            </ul>
+        <%}else{%>
+                <ul class="flex gap-6">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/allListing"> ALL Listings</a></li>
+                    <li><a href="/listing"> Add Listings</a></li>
+                    <li><a href="/login">login</a></li>
+                </ul>
+        <%}%>
     </div>
 
 </div>

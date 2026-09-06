@@ -7,15 +7,19 @@ export class Service{
     bucket;
     
     constructor(){
-        this.client
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId);
+        if (conf.appwriteUrl) {
+            this.client.setEndpoint(conf.appwriteUrl);
+        }
+        if (conf.appwriteProjectId) {
+            this.client.setProject(conf.appwriteProjectId);
+        }
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({title, slug, content, featuredImage, featureimage, status, userId}){
         try {
+            const imageId = featureimage || featuredImage;
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -23,18 +27,20 @@ export class Service{
                 {
                     title,
                     content,
-                    featuredImage,
+                    featureimage: imageId,
                     status,
                     userId,
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error", error);
+            console.log("Appwrite service :: createPost :: error", error);
+            throw error;
         }
     }
 
-    async updatePost(slug, {title, content, featuredImage, status}){
+    async updatePost(slug, {title, content, featuredImage, featureimage, status}){
         try {
+            const imageId = featureimage || featuredImage;
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -42,13 +48,13 @@ export class Service{
                 {
                     title,
                     content,
-                    featuredImage,
+                    featureimage: imageId,
                     status,
-
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: updatePost :: error", error);
+            console.log("Appwrite service :: updatePost :: error", error);
+            throw error;
         }
     }
 
@@ -62,7 +68,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite serive :: deletePost :: error", error);
+            console.log("Appwrite service :: deletePost :: error", error);
             return false
         }
     }
@@ -76,7 +82,7 @@ export class Service{
             
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPost :: error", error);
+            console.log("Appwrite service :: getPost :: error", error);
             return false
         }
     }
@@ -91,7 +97,7 @@ export class Service{
 
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
+            console.log("Appwrite service :: getPosts :: error", error);
             return false
         }
     }
@@ -106,12 +112,13 @@ export class Service{
                 file
             )
         } catch (error) {
-            console.log("Appwrite serive :: uploadFile :: error", error);
+            console.log("Appwrite service :: uploadFile :: error", error);
             return false
         }
     }
 
     async deleteFile(fileId){
+        if (!fileId) return true;
         try {
             await this.bucket.deleteFile(
                 conf.appwriteBucketId,
@@ -119,16 +126,35 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite serive :: deleteFile :: error", error);
+            console.log("Appwrite service :: deleteFile :: error", error);
             return false
         }
     }
 
     getFilePreview(fileId){
-        return this.bucket.getFilePreview(
-            conf.appwriteBucketId,
-            fileId
-        )
+        if (!fileId) return "";
+        try {
+            return this.bucket.getFileView(
+                conf.appwriteBucketId,
+                fileId
+            );
+        } catch (error) {
+            console.log("Appwrite service :: getFilePreview :: error", error);
+            return "";
+        }
+    }
+
+    getFileView(fileId){
+        if (!fileId) return "";
+        try {
+            return this.bucket.getFileView(
+                conf.appwriteBucketId,
+                fileId
+            );
+        } catch (error) {
+            console.log("Appwrite service :: getFileView :: error", error);
+            return "";
+        }
     }
 }
 

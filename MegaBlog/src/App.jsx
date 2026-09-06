@@ -1,53 +1,39 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import conf from '../conf';
 import { useDispatch } from 'react-redux';
-import { login,logout } from './store/authSlice';
-import authService from './Appwrite/Auth'
+import { login, logout } from './store/authSlice';
+import authService from './appwrite/Auth.js';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer'
-import { Outlet, Routes, Route } from 'react-router-dom';
-import { Signup, Home,Login } from './components';
+import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [loading ,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     authService.getCurrentUser()
-    .then((UserData)=>{
-      if(UserData){
-        dispatch(login({UserData:UserData}))
-      }else{
-        dispatch(logout())
-      }
-    })
-    .finally(()=>setLoading(false))
-  },[]);
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({ userData }));
+        } else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [dispatch]);
 
-  if(!loading){
-    return(
-      <>
-      <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
-        <div className='w-full block'>
-          <Header/>
-          <main>
-            <Outlet/>
-          </main>
-          
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-            </Routes>
-          <Footer/>
-
-        </div>
-
+  return !loading ? (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
       </div>
-      </>
-    )
-  }
+    </div>
+  ) : null;
 }
 
-export default App
+export default App;

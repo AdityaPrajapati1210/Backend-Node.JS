@@ -10,6 +10,11 @@ const ExpressError = require("./utils/ExpressError.js");
 const Review = require('./models/review.js');
 const { reviewSchema } = require('./schema.js');
 const listingRouter = require('./routes/listingRouter.js')
+const user = require("./models/user.js");
+const session = require('express-session');
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 
 
 app.engine("ejs", ejsMate);
@@ -18,7 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(method("_method"));
-app.use("/listing",listingRouter);
+app.use("/listing", listingRouter);
+app.use(session({ secret: "mysecret", resave: false, saveUninitialized: true }))
 
 
 const validateReview = (req, res, next) => {
@@ -34,6 +40,16 @@ const validateReview = (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
+    if (req.cookies.count) {
+
+        let count = Number(req.cookies.count);
+        count++;
+
+        res.cookie("count", count);
+
+    } else {
+        res.cookie("count", 1);
+    }
     res.redirect("/home");
 });
 
@@ -47,7 +63,22 @@ app.get("/alllisting", wrapAsync(async (req, res, next) => {
 }))
 
 
+app.get("/login", (req, res) => {
+    res.render("login", { message: "" });
+})
 
+// app.post("/login",(req,res)=>{
+//     const { name , email , password} = req.body;
+
+//     const data = user.findOne({email});
+
+//     if(!data){
+//         message = "Invalid Crititend";
+//         res.redirect("/login");
+//     }
+
+//     const checkPassword = bycrpt.
+// })
 
 
 app.all("/{*splat}", (req, res, next) => {

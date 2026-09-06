@@ -1,0 +1,15 @@
+<% layout('boilerplate') %>
+
+    <div class="flex justify-center items-center">
+        <div>
+            <form action="/login" method="post">
+                <label for="name">Name </label>
+                <input type="text" name="name" placeholder="Enter your name" id="name">
+                <label for="email">Email </label>
+                <input type="email" name="email" placeholder="Enter your email" id="email">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" id="password">
+                <button type="submit" class="p-2 rounded bg-blue-500 text-white font-bold">Login</button>
+            </form>
+        </div>
+    </div>

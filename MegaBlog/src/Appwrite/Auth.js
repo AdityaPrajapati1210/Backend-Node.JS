@@ -1,4 +1,4 @@
-import conf from '../../conf';
+import conf from '../../conf.js';
 import { Client, Account, ID } from "appwrite";
 
 
@@ -7,31 +7,35 @@ export class AuthService {
     account;
 
     constructor() {
-        this.client
-            .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectId);
+        if (conf.appwriteUrl) {
+            this.client.setEndpoint(conf.appwriteUrl);
+        }
+        if (conf.appwriteProjectId) {
+            this.client.setProject(conf.appwriteProjectId);
+        }
         this.account = new Account(this.client);
-            
     }
 
     async createAccount({email, password, name}) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
-                // call another method
+                // call login method
                 return this.login({email, password});
             } else {
-               return  userAccount;
+                return userAccount;
             }
         } catch (error) {
+            console.log("Appwrite service :: createAccount :: error", error);
             throw error;
         }
     }
 
     async login({email, password}) {
         try {
-            return await this.account.createEmailSession(email, password);
+            return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
+            console.log("Appwrite service :: login :: error", error);
             throw error;
         }
     }
@@ -40,7 +44,7 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            if (error.code !== 401) {
+            if (error?.code !== 401) {
                 console.log("Appwrite service :: getCurrentUser :: error", error);
             }
         }
@@ -49,7 +53,6 @@ export class AuthService {
     }
 
     async logout() {
-
         try {
             await this.account.deleteSessions();
         } catch (error) {
@@ -60,4 +63,4 @@ export class AuthService {
 
 const authService = new AuthService();
 
-export default authService
+export default authService;
