@@ -57,9 +57,9 @@ app.get("/home", (req, res) => {
     res.render("listing/home");
 })
 
-app.get("/alllisting", wrapAsync(async (req, res, next) => {
+app.get("/allListing", wrapAsync(async (req, res, next) => {
     const data = await listing.find();
-    res.render("listing/alllisting", { data: data });
+    res.render("listing/allListing", { data: data });
 }))
 
 
