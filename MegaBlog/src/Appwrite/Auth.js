@@ -18,10 +18,16 @@ export class AuthService {
 
     async createAccount({email, password, name}) {
         try {
+            // If there is an active session from a previous user, clear it first
+            try {
+                await this.account.deleteSessions();
+            } catch {
+                // No active session or delete failed, safe to proceed
+            }
+
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
-                // call login method
-                return this.login({email, password});
+                return await this.login({email, password});
             } else {
                 return userAccount;
             }
@@ -35,6 +41,16 @@ export class AuthService {
         try {
             return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
+            // If a session is already active (code 409), delete previous sessions and retry
+            if (error?.code === 409 || error?.message?.toLowerCase().includes("session is active")) {
+                try {
+                    await this.account.deleteSessions();
+                    return await this.account.createEmailPasswordSession(email, password);
+                } catch (retryError) {
+                    console.log("Appwrite service :: login retry :: error", retryError);
+                    throw retryError;
+                }
+            }
             console.log("Appwrite service :: login :: error", error);
             throw error;
         }
