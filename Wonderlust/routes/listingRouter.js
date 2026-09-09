@@ -38,12 +38,17 @@ router.post("/", wrapAsync(async (req, res, next) => {              //add to lis
         location,
         country
     })
+    req.flash("success","listing add successfully");
     res.redirect("/home");
 }))
 
 router.get("/:id", wrapAsync(async (req, res, next) => {                //details edit page
     const data = await listing.findById(req.params.id).populate("review");
     // console.log(data);
+    if(!data){
+        req.flash("error","listing not exist!");
+        return res.redirect("/allListing")
+    }
     res.render("listing/listingDetails", { data: data });
 }))
 
@@ -52,18 +57,20 @@ router.get("/:id/edit", wrapAsync(async (req, res, next) => {                 //
     res.render("listing/edit", { data: data });
 }))
 
-router.patch("/:id", wrapAsync(async (req, res, next) => {
+router.patch("/:id", wrapAsync(async (req, res, next) => {              //update listing
     await listing.findByIdAndUpdate(req.params.id, req.body);
+    req.flash("success","listing update successfully");
     res.redirect(`/listing/${req.params.id}`);
 }))
 
-router.delete("/:id", wrapAsync(async (req, res, next) => {
+router.delete("/:id", wrapAsync(async (req, res, next) => {              //delete listing
     await listing.findByIdAndDelete(req.params.id);
+    req.flash("success","listing delete successfully");
     res.redirect("/alllisting");
 }))
 
 // add review
-router.post("/:id/review", validateReview, wrapAsync(async (req, res, next) => {
+router.post("/:id/review", validateReview, wrapAsync(async (req, res, next) => {        //add reviiew
 
     console.log("1. request aayi h");
     console.log("2. ID:", req.params.id);
@@ -98,7 +105,7 @@ router.post("/:id/review", validateReview, wrapAsync(async (req, res, next) => {
     await comeListing.save();
 
     console.log("10. listing saved");
-
+    req.flash("success","review add successfully");
     res.json({
         _id: newReview._id,
         rating: newReview.rating,
@@ -107,10 +114,11 @@ router.post("/:id/review", validateReview, wrapAsync(async (req, res, next) => {
 }));
 
 // remove Review
-router.delete("/:id/review/:reviewId", wrapAsync(async (req, res, next) => {
+router.delete("/:id/review/:reviewId", wrapAsync(async (req, res, next) => {         //delete review
     const { id, reviewId } = req.params;
     await listing.findByIdAndUpdate(id, { $pull: { review: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success","review delete successfully");
     res.redirect(`/listing/${id}`);
 }))
 
