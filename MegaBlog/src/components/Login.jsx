@@ -9,20 +9,28 @@ import {useForm} from "react-hook-form"
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, formState: { errors }} = useForm()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const login = async(data) => {
         setError("")
+        setLoading(true)
         try {
             const session = await authService.login(data)
             if (session) {
                 const userData = await authService.getCurrentUser()
-                if(userData) dispatch(authLogin({ userData }));
+                if (userData) {
+                    dispatch(authLogin({ userData }));
+                } else {
+                    dispatch(authLogin({ userData: { $id: session.userId, email: data.email } }));
+                }
                 navigate("/")
             }
-        } catch (error) {
-            setError(error.message)
+        } catch (err) {
+            setError(err?.message || "Failed to sign in. Please check your credentials.")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -53,10 +61,11 @@ function Login() {
                 label="Email: "
                 placeholder="Enter your email"
                 type="email"
+                error={errors.email?.message}
                 {...register("email", {
-                    required: true,
+                    required: "Email is required",
                     validate: {
-                        matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                        matchPattern: (value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ||
                         "Email address must be a valid address",
                     }
                 })}
@@ -65,14 +74,16 @@ function Login() {
                 label="Password: "
                 type="password"
                 placeholder="Enter your password"
+                error={errors.password?.message}
                 {...register("password", {
-                    required: true,
+                    required: "Password is required",
                 })}
                 />
                 <Button
                 type="submit"
-                className="w-full"
-                >Sign in</Button>
+                disabled={loading}
+                className={`w-full ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                >{loading ? "Signing in..." : "Sign in"}</Button>
             </div>
         </form>
         </div>

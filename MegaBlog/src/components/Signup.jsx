@@ -9,20 +9,28 @@ import {useForm} from 'react-hook-form'
 function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, formState: { errors }} = useForm()
 
     const create = async(data) => {
         setError("")
+        setLoading(true)
         try {
             const userAccount = await authService.createAccount(data)
             if (userAccount) {
                 const currentUser = await authService.getCurrentUser()
-                if(currentUser) dispatch(login({ userData: currentUser }));
+                if (currentUser) {
+                    dispatch(login({ userData: currentUser }));
+                } else {
+                    dispatch(login({ userData: { $id: userAccount.userId, name: data.name, email: data.email } }));
+                }
                 navigate("/")
             }
-        } catch (error) {
-            setError(error.message)
+        } catch (err) {
+            setError(err?.message || "Failed to create account. Please try again.")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -51,18 +59,20 @@ function Signup() {
                         <Input
                         label="Full Name: "
                         placeholder="Enter your full name"
+                        error={errors.name?.message}
                         {...register("name", {
-                            required: true,
+                            required: "Full name is required",
                         })}
                         />
                         <Input
                         label="Email: "
                         placeholder="Enter your email"
                         type="email"
+                        error={errors.email?.message}
                         {...register("email", {
-                            required: true,
+                            required: "Email is required",
                             validate: {
-                                matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                                matchPattern: (value) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ||
                                 "Email address must be a valid address",
                             }
                         })}
@@ -70,12 +80,22 @@ function Signup() {
                         <Input
                         label="Password: "
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Enter your password (min 8 characters)"
+                        error={errors.password?.message}
                         {...register("password", {
-                            required: true,})}
+                            required: "Password is required",
+                            minLength: {
+                                value: 8,
+                                message: "Password must be at least 8 characters long"
+                            }
+                        })}
                         />
-                        <Button type="submit" className="w-full">
-                            Create Account
+                        <Button
+                        type="submit"
+                        disabled={loading}
+                        className={`w-full ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        >
+                            {loading ? "Creating Account..." : "Create Account"}
                         </Button>
                     </div>
                 </form>
