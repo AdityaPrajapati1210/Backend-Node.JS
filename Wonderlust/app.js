@@ -72,16 +72,11 @@ app.use((req,res,next)=>{               //flash middleware
 })
 
 
-app.get('/demouser',async (req,res)=>{
-    const fakeUser = new User({
-        email: "fake4@gmail.com",
-        username : "fakeuser4"
-    })
 
-    let registeredUser = await User.register(fakeUser,"123456");
-
-    console.log(registeredUser);
-    res.send(registeredUser);
+app.use((req,res, next)=>{              //loggedin 
+    console.log(req.isAuthenticated());
+    res.locals.LocalStorageLoggedInCheck = req.isAuthenticated();
+    next();
 })
 
 app.use("/listing", listingRouter);

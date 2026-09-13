@@ -5,19 +5,21 @@
     </div>
 
     <div>
-        <%if(1){%>
+        <%if(LocalStorageLoggedInCheck){%>
             <ul class="flex gap-6">
                 <li><a href="/home">Home</a></li>
                 <li><a href="/allListing"> ALL Listings</a></li>
                 <li><a href="/listing"> Add Listings</a></li>
-                <li><a href="/logout">logout</a></li>
+                <li><a href="/user/logout">logout</a></li>
             </ul>
         <%}else{%>
                 <ul class="flex gap-6">
                     <li><a href="/home">Home</a></li>
                     <li><a href="/allListing"> ALL Listings</a></li>
                     <li><a href="/listing"> Add Listings</a></li>
-                    <li><a href="/login">login</a></li>
+                    <li><a href="/user/login">login</a></li>
+                    <li><a href="/user/Signup">Signup</a></li>
+                    
                 </ul>
         <%}%>
     </div>

@@ -5,7 +5,8 @@ const ExpressError = require("../utils/ExpressError.js");
 const listing = require("../models/listing.js");
 const Review = require('../models/review.js');
 const { reviewSchema } = require('../schema.js');
-
+const flash = require('connect-flash');
+const {isLoggedin } = require('../middleware/isLoggedin.js');
 const validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -18,10 +19,14 @@ const validateReview = (req, res, next) => {
     }
 };
 
-router.get("/", (req, res) => {
+
+
+router.get("/", isLoggedin, (req, res) => {
     res.render("listing/addlisting");
 })
-router.post("/", wrapAsync(async (req, res, next) => {              //add to listing
+
+router.post("/",isLoggedin, wrapAsync(async (req, res, next) => {              //add to listing
+    console.log(`req : ${req}`);
     if (!req.body) {
         throw new ExpressError(501, "Data not found");
     }
@@ -30,21 +35,23 @@ router.post("/", wrapAsync(async (req, res, next) => {              //add to lis
     if (!image_url) {
         image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSltdyesaETmIsYYdxPW3gcpIW0LCkUWaTdcCzKII5VMw&s=10";
     }
-    await listing.create({
+    const newlisting = await listing.create({
         title,
         description,
         image_url,
         price,
         location,
-        country
+        country,
+        userId:req.user._id
     })
+
     req.flash("success","listing add successfully");
     res.redirect("/home");
 }))
 
 router.get("/:id", wrapAsync(async (req, res, next) => {                //details edit page
-    const data = await listing.findById(req.params.id).populate("review");
-    // console.log(data);
+    const data = await listing.findById(req.params.id).populate("review").populate("userId");
+    console.log(data);
     if(!data){
         req.flash("error","listing not exist!");
         return res.redirect("/allListing")
@@ -52,7 +59,7 @@ router.get("/:id", wrapAsync(async (req, res, next) => {                //detail
     res.render("listing/listingDetails", { data: data });
 }))
 
-router.get("/:id/edit", wrapAsync(async (req, res, next) => {                 //edit page khol k dega
+router.get("/:id/edit",isLoggedin,wrapAsync(async (req, res, next) => {                 //edit page khol k dega
     const data = await listing.findById(req.params.id);
     res.render("listing/edit", { data: data });
 }))

@@ -59,9 +59,9 @@ const listingSchema = new mongoose.Schema(
                 ref: "Review"
             }
         ],
-        userID:{
+        userId:{
             type:mongoose.Schema.Types.ObjectId,
-            ref : "user"
+            ref : "User"
         }
     },
 );
