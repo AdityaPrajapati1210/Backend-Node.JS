@@ -6,7 +6,7 @@ const listing = require("../models/listing.js");
 const Review = require('../models/review.js');
 const { reviewSchema } = require('../schema.js');
 const flash = require('connect-flash');
-const {isLoggedin } = require('../middleware/isLoggedin.js');
+const {isLoggedin ,isOwner} = require('../middleware/isLoggedin.js');
 const validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -51,7 +51,7 @@ router.post("/",isLoggedin, wrapAsync(async (req, res, next) => {              /
 
 router.get("/:id", wrapAsync(async (req, res, next) => {                //details edit page
     const data = await listing.findById(req.params.id).populate("review").populate("userId");
-    console.log(data);
+    // console.log(data);
     if(!data){
         req.flash("error","listing not exist!");
         return res.redirect("/allListing")
@@ -64,59 +64,69 @@ router.get("/:id/edit",isLoggedin,wrapAsync(async (req, res, next) => {         
     res.render("listing/edit", { data: data });
 }))
 
-router.patch("/:id", wrapAsync(async (req, res, next) => {              //update listing
+router.patch("/:id",isLoggedin,isOwner, wrapAsync(async (req, res, next) => {              //update listing
     await listing.findByIdAndUpdate(req.params.id, req.body);
     req.flash("success","listing update successfully");
     res.redirect(`/listing/${req.params.id}`);
 }))
 
-router.delete("/:id", wrapAsync(async (req, res, next) => {              //delete listing
+router.delete("/:id",isLoggedin, wrapAsync(async (req, res, next) => {              //delete listing
     await listing.findByIdAndDelete(req.params.id);
     req.flash("success","listing delete successfully");
     res.redirect("/alllisting");
 }))
 
 // add review
-router.post("/:id/review", validateReview, wrapAsync(async (req, res, next) => {        //add reviiew
+router.post("/:id/review",isLoggedin, validateReview, wrapAsync(async (req, res, next) => {        //add reviiew
 
-    console.log("1. request aayi h");
-    console.log("2. ID:", req.params.id);
-    console.log("3. BODY:", req.body);
+    // console.log("1. request aayi h");
+    // console.log("2. ID:", req.params.id);
+    // console.log("3. BODY:", req.body);
 
-    const comeListing = await listing.findById(req.params.id);
+    const comeListing = await listing.findById(req.params.id).populate({
+        path: "review",
+        populate: {
+            path: "createdBy"
+        }
+    });;
 
-    console.log("4. listing mili:", comeListing);
+    // console.log("4. listing mili:", comeListing);
 
     const { comment, rating } = req.body;
 
-    console.log("5. comment:", comment);
-    console.log("6. rating:", rating);
+    // console.log("5. comment:", comment);
+    // console.log("6. rating:", rating);
 
     if (!comment || !rating) {
         throw new ExpressError(400, "Data not found");
     }
 
     console.log("7. creating review...");
+    console.log(comeListing);
+
+    const createdBy = req.user._id;
 
     const newReview = await Review.create({
         comment,
-        rating
+        rating,
+        createdBy
     });
 
-    console.log("8. review created:", newReview);
+    // console.log("8. review created:", newReview);
 
     comeListing.review.push(newReview._id);
 
-    console.log("9. review pushed");
+    // console.log("9. review pushed");
 
     await comeListing.save();
 
-    console.log("10. listing saved");
+    // console.log("10. listing saved");
     req.flash("success","review add successfully");
     res.json({
         _id: newReview._id,
         rating: newReview.rating,
-        comment: newReview.comment
+        comment: newReview.comment,
+        createdBy:req.user.username
     });
 }));
 

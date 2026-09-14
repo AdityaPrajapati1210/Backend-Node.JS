@@ -126,6 +126,7 @@
 
 
                     <!-- Reviews -->
+                     <%if(currUser){%>
                     <div class="mt-10 border-t border-gray-200 pt-8">
 
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -146,6 +147,7 @@
                             </button>
 
                         </div>
+                        <%}%>
 
                         <!-- yaha pe review add hoga class hidden rahega... -->
                         <!-- Add Review Form -->
@@ -245,12 +247,13 @@
                                     <p class="mt-4 leading-6 text-gray-600">
                                         <%=review.comment%>
                                     </p>
-
+                                    <% if (currUser && review.createdBy && currUser._id.equals(review.createdBy._id)) { %>
                                     <form action="/listing/<%=data._id%>/review/<%=review._id%>?_method=DELETE"
                                         method="Post">
                                         <button type="submit"
                                             class="w-full rounded px-6 py-2 font-semibold text-black border-2 border-red-700 shadow-sm transition hover:bg-red-600 hover:shadow-md sm:w-auto relative right-1.5">Remove</button>
                                     </form>
+                                    <%}%>
 
                                 </div>
 
@@ -263,7 +266,7 @@
 
                     </div>
 
-
+                    <%if( currUser && currUser.username ==  data.userId.username ){%>
                     <!-- Action Buttons -->
                     <div class="mt-10 flex flex-col gap-3 border-t border-gray-200 pt-6 sm:flex-row sm:justify-end">
 
@@ -282,6 +285,7 @@
                         </form>
 
                     </div>
+                    <%}%>
 
                 </div>
 

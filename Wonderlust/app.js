@@ -68,6 +68,8 @@ app.use((req,res,next)=>{               //flash middleware
     res.locals.error = req.flash("error");
     console.log(res.locals.success);
     console.log(res.locals.error)
+    console.log(req.user);
+    res.locals.currUser = req.user;
     next();
 })
 

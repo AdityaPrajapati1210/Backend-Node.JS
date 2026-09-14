@@ -11,6 +11,10 @@ const reviewSchema = new mongoose.Schema({
         min: [1, "Rating is too low"],
         max: [5, "Rating is too high"]
     },
+    createdBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
     createdAt:{
         type:Date,
         default:Date.now
